@@ -1,15 +1,41 @@
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
-struct Car
+typedef struct s_car
 {
-	char name[12];
-};
+	char	name[12];
+	int	position;
+}		t_car;
 
-void	main()
+t_car	make_car(void)
 {
-	printf("자동차 이름을 입력해주세요 \n");
-	struct Car car;
+	t_car	car;
+
+	printf("enter your car name \n");
 	gets(car.name);
-	printf(car.name);
+	car.position = 0;
+	return (car);
+}
+
+void	go(t_car	car, int number)
+{
+	printf("%s: ", car.name);
+	if (number >= 4)
+	{
+		car.position ++;
+		printf("%c", '-');
+	}
+}
+
+void	main(void)
+{
+	int	random_number;
+	t_car	car;
+
+	car = make_car();
+	srand(time(NULL));
+	random_number = rand() % 10 + 1;
+	go(car, random_number);
+	printf("\n");
 }
