@@ -1,50 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
-typedef struct s_car
+typedef struct _Car {
+	int number;
+} Car;
+
+void makeCars(int carsNumber, Car *cars)
 {
-	char	name[12];
-	int	position;
-}		t_car;
-
-t_car	make_car(void)
-{
-	char	names[50];
-	t_car	car;
-	t_car	cars[5];
-
-	printf("enter your car name (separated by ,)\n");
-	gets(names);
-	names = strtok(names, ",");
-	while (names != NULL)
+	int number;
+	number = 1;
+	while (number <= carsNumber)
 	{
-		printf("%s", names);
-		strtok(NULL, ",");
-	}
-	car.position = 0;
-	return (car);
-}
-
-void	go(t_car	car, int number)
-{
-	printf("%s: ", car.name);
-	if (number >= 4)
-	{
-		car.position ++;
-		printf("%c", '-');
+		Car car;
+		car.number = number;
+		cars[number - 1] = car;
+		number++;
 	}
 }
 
-void	main(void)
+void main()
 {
-	int	random_number;
-	t_car	car;
+	int carsNumber;
+	int time;
+	Car *cars;
 
-	car = make_car();
-	srand(time(NULL));
-	random_number = rand() % 10 + 1;
-	go(car, random_number);
-	printf("\n");
+	printf("몇개의 자동차로 경주를 할건가요? : ");
+	scanf("%d", &carsNumber);
+	cars = malloc(sizeof(Car) * carsNumber);
+	makeCars(carsNumber, cars);
+	time = 0;
+	while (time < carsNumber)
+	{
+		printf("%d \n", cars[time].number);
+		time++;
+	}
+	free(cars);
 }
