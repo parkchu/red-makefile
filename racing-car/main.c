@@ -33,9 +33,51 @@ void makeCars(int carsNumber, Car *cars)
 
 void go(Car *car, int randomValue)
 {
-	if (randomValue >= 4)
+        if (randomValue >= 4)
+        {
+                car->moveTime++;
+        }
+}
+
+void showRacing(int times, Car car)
+{
+        char *distance = malloc(sizeof(char) * times);
+
+        memset(distance, 0, times);
+        memset(distance, '-', car.moveTime);
+        printf("%d : %s : %d \n", car.number, distance, car.moveTime);
+
+        free(distance);
+}
+
+void race(int carsNumber, Car *cars, int times)
+{
+	int index;
+	int randomValue;
+	Car *car;
+
+	index = 0;
+	while (index < carsNumber)
 	{
-		car->moveTime++;
+		car = cars + index;
+		randomValue = rand() % 10 + 1;
+		go(car, randomValue);
+		showRacing(times, *car);
+		index++;
+	}
+}
+
+void startRacing(int times, int carsNumber, Car *cars)
+{
+	int currentTime;
+	Car *car;
+
+	currentTime = 0;
+	while (currentTime < times)
+	{
+		race(carsNumber, cars, times);
+		printf("------------------------------------ \n");
+		currentTime++;
 	}
 }
 
@@ -43,34 +85,13 @@ void main()
 {
 	int carsNumber;
 	int times;
-	int index;
-	int randomValue;
 	Car *cars;
 
+	srand(time(NULL));
 	getInputValue(&carsNumber, &times);
-
 	cars = malloc(sizeof(Car) * carsNumber);
 	makeCars(carsNumber, cars);
+	startRacing(times, carsNumber, cars);
 
-	srand(time(NULL));
-	char *test = malloc(sizeof(char) * times);
-	index = 0;
-	while (times > 0)
-	{
-		memset(test, 0, times);
-		Car *car = cars + index;
-		randomValue = rand() % 10 + 1;
-		go(car, randomValue);
-		memset(test, '-', car->moveTime);
-		printf("%d : %s : %d \n", car->number, test, car->moveTime);
-		index++;
-		if (index == carsNumber)
-		{
-			printf("------------------------------------ \n");
-			index = 0;
-			times--;
-		}
-	}
 	free(cars);
-	free(test);
 }
