@@ -8,6 +8,11 @@ typedef struct _Car {
 	int moveTime;
 } Car;
 
+typedef union _Element {
+	int size;
+	Car car;
+} Element;
+
 void getInputValue(int *carsNumber, int *times)
 {
 	printf("몇개의 자동차로 경주를 할건가요? : ");
@@ -17,16 +22,16 @@ void getInputValue(int *carsNumber, int *times)
         printf("------------------------------------ \n");
 }
 
-void makeCars(int carsNumber, Car *cars)
+void makeCars(Element *cars)
 {
 	int number;
 	number = 1;
-	while (number <= carsNumber)
+	while (number <= cars->size)
 	{
 		Car car;
 		car.number = number;
 		car.moveTime = 0;
-		cars[number - 1] = car;
+		cars[number].car = car;
 		number++;
 	}
 }
@@ -50,16 +55,16 @@ void showRacing(int times, Car car)
         free(distance);
 }
 
-void race(int carsNumber, Car *cars, int times)
+void race(Element *cars, int times)
 {
 	int index;
 	int randomValue;
 	Car *car;
 
 	index = 0;
-	while (index < carsNumber)
+	while (index < cars->size)
 	{
-		car = cars + index;
+		car = &cars[index].car;
 		randomValue = rand() % 10 + 1;
 		go(car, randomValue);
 		showRacing(times, *car);
@@ -67,15 +72,14 @@ void race(int carsNumber, Car *cars, int times)
 	}
 }
 
-void startRacing(int times, int carsNumber, Car *cars)
+void startRacing(int times, Element *cars)
 {
 	int currentTime;
-	Car *car;
 
 	currentTime = 0;
 	while (currentTime < times)
 	{
-		race(carsNumber, cars, times);
+		race(cars, times);
 		printf("------------------------------------ \n");
 		currentTime++;
 	}
@@ -85,13 +89,14 @@ void main()
 {
 	int carsNumber;
 	int times;
-	Car *cars;
+	Element *cars;
 
 	srand(time(NULL));
 	getInputValue(&carsNumber, &times);
-	cars = malloc(sizeof(Car) * carsNumber);
-	makeCars(carsNumber, cars);
-	startRacing(times, carsNumber, cars);
+	cars = malloc(sizeof(Element) * (carsNumber + 1));
+	cars->size = carsNumber;
+	makeCars(cars);
+	startRacing(times, cars);
 
 	free(cars);
 }
