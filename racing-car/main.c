@@ -26,7 +26,7 @@ void makeCars(Element *cars)
 {
 	int number;
 	number = 1;
-	while (number <= cars->size)
+	while (number <= cars[0].size)
 	{
 		Car car;
 		car.number = number;
@@ -40,7 +40,7 @@ void go(Car *car, int randomValue)
 {
         if (randomValue >= 4)
         {
-                car->moveTime++;
+        	car->moveTime++;
         }
 }
 
@@ -57,18 +57,18 @@ void showRacing(int times, Car car)
 
 void race(Element *cars, int times)
 {
-	int index;
+	int number;
 	int randomValue;
 	Car *car;
 
-	index = 0;
-	while (index < cars->size)
+	number = 1;
+	while (number <= cars->size)
 	{
-		car = &cars[index].car;
+		car = &cars[number].car;
 		randomValue = rand() % 10 + 1;
 		go(car, randomValue);
 		showRacing(times, *car);
-		index++;
+		number++;
 	}
 }
 
@@ -85,6 +85,52 @@ void startRacing(int times, Element *cars)
 	}
 }
 
+void getWinner(Element *cars, Element *winner)
+{
+	int number;
+	int topMoveTime;
+	Car car;
+	
+	topMoveTime = -1;
+	number = 1;
+	while (number <= cars[0].size)
+	{
+		car = cars[number].car;
+		if (topMoveTime < car.moveTime || number == 1)
+		{
+			topMoveTime = car.moveTime;
+			winner[0].size = 1;
+			winner[1].car = car;
+		}
+		else if (topMoveTime == car.moveTime)
+		{
+			winner[0].size++;
+			winner[winner[0].size].car = car;
+		}
+		number++;
+		
+	}
+}
+
+void showWinner(Element *cars)
+{
+	Element *winner;
+	int number;
+	
+	winner = malloc(sizeof(Element) * cars[0].size + 1);
+	getWinner(cars, winner);
+	printf("우승자는 ");
+	number = 1;
+	while (number <= winner[0].size) 
+	{
+		printf("%d번 ", winner[number].car.number);
+		number++;
+	}
+        printf("자동차 입니다!!! \n");
+
+	free(winner);
+}
+
 void main()
 {
 	int carsNumber;
@@ -97,6 +143,7 @@ void main()
 	cars->size = carsNumber;
 	makeCars(cars);
 	startRacing(times, cars);
+	showWinner(cars);
 
 	free(cars);
 }
