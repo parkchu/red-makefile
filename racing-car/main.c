@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 
 typedef struct _Car {
+	char name[15];
 	int number;
 	int moveTime;
 } Car;
@@ -13,27 +15,46 @@ typedef union _Element {
 	Car car;
 } Element;
 
-void getInputValue(int *carsNumber, int *times)
+void getInputValue(char *names, int *times)
 {
-	printf("몇개의 자동차로 경주를 할건가요? : ");
-        scanf("%d", carsNumber);
+	printf("자동차들의 이름을 입력해주세요 (','로 구분됩니다.) : ");
+        scanf("%s", names);
         printf("시도횟수는 몇회 인가요? : ");
         scanf("%d", times);
         printf("------------------------------------ \n");
 }
 
-void makeCars(Element *cars)
+void makeCars(Element *cars, char *names)
 {
-	int number;
-	number = 1;
-	while (number <= cars[0].size)
+	char *name;
+	int size;
+	
+	name = strtok(names, ",");
+	while (name != NULL)
 	{
 		Car car;
-		car.number = number;
+		
+		size = ++cars[0].size;
+		realloc(cars, sizeof(Element) * (size + 1));
+		strcpy(car.name, name);
+		car.number = size;
 		car.moveTime = 0;
-		cars[number].car = car;
-		number++;
+		cars[size].car = car;
+		name = strtok(NULL, ",");
 	}
+}
+
+void showStartingSignal()
+{
+        printf("잠시후 레이싱이 시작됩니다. \n");
+        sleep(1);
+        printf("3.....\n");
+        sleep(1);
+        printf("2...\n");
+        sleep(1);
+        printf("1..\n");
+        sleep(1);
+        printf("출발!!!!\n\n");
 }
 
 void go(Car *car, int randomValue)
@@ -50,7 +71,7 @@ void showRacing(int times, Car car)
 
         memset(distance, 0, times);
         memset(distance, '-', car.moveTime);
-        printf("%d : %s : %d \n", car.number, distance, car.moveTime);
+        printf("%d번차 : %s : %s : %d \n", car.number, distance, car.name, car.moveTime);
 
         free(distance);
 }
@@ -76,12 +97,14 @@ void startRacing(int times, Element *cars)
 {
 	int currentTime;
 
+	showStartingSignal();
 	currentTime = 0;
 	while (currentTime < times)
 	{
 		race(cars, times);
 		printf("------------------------------------ \n");
 		currentTime++;
+		sleep(1);
 	}
 }
 
@@ -108,7 +131,6 @@ void getWinner(Element *cars, Element *winner)
 			winner[winner[0].size].car = car;
 		}
 		number++;
-		
 	}
 }
 
@@ -123,7 +145,7 @@ void showWinner(Element *cars)
 	number = 1;
 	while (number <= winner[0].size) 
 	{
-		printf("%d번 ", winner[number].car.number);
+		printf("%s님 ", winner[number].car.name);
 		number++;
 	}
         printf("자동차 입니다!!! \n");
@@ -133,15 +155,15 @@ void showWinner(Element *cars)
 
 void main()
 {
-	int carsNumber;
+	char names[200];
 	int times;
 	Element *cars;
 
 	srand(time(NULL));
-	getInputValue(&carsNumber, &times);
-	cars = malloc(sizeof(Element) * (carsNumber + 1));
-	cars->size = carsNumber;
-	makeCars(cars);
+	getInputValue(names, &times);
+	cars = malloc(sizeof(Element));
+	cars->size = 0;
+	makeCars(cars, names);
 	startRacing(times, cars);
 	showWinner(cars);
 
