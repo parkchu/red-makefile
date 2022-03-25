@@ -76,35 +76,36 @@ void showRacing(int times, Car car)
         free(distance);
 }
 
-void race(Element *cars, int times)
+void race(Car *car)
 {
-	int number;
 	int randomValue;
-	Car *car;
 
-	number = 1;
-	while (number <= cars->size)
-	{
-		car = &cars[number].car;
-		randomValue = rand() % 10 + 1;
-		go(car, randomValue);
-		showRacing(times, *car);
-		number++;
-	}
+	randomValue = rand() % 10 + 1;
+	go(car, randomValue);
 }
 
 void startRacing(int times, Element *cars)
 {
 	int currentTime;
+	int number;
+	Car *car;
 
 	showStartingSignal();
 	currentTime = 0;
+	number = 1;
 	while (currentTime < times)
 	{
-		race(cars, times);
-		printf("------------------------------------ \n");
-		currentTime++;
-		sleep(1);
+		car = &cars[number].car;
+		race(car);
+		showRacing(times, *car);
+		number++;
+		if (number > cars->size)
+		{
+			printf("------------------------------------ \n");
+			currentTime++;
+			number = 1;
+			sleep(1);
+		}
 	}
 }
 
