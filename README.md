@@ -1,6 +1,6 @@
 ### Joohan’s makefile rules
 
-#파일 구조
+# 파일 구조
 ```
 |----project_name
    |----Makefile
