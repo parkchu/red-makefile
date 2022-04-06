@@ -112,21 +112,21 @@ void startRacing(int times, Element *cars)
 void getWinner(Element *cars, Element *winner)
 {
 	int number;
-	int topMoveTime;
+	int maxMoveTime;
 	Car car;
 	
-	topMoveTime = -1;
+	maxMoveTime = -1;
 	number = 1;
 	while (number <= cars[0].size)
 	{
 		car = cars[number].car;
-		if (topMoveTime < car.moveTime || number == 1)
+		if (maxMoveTime < car.moveTime || number == 1)
 		{
-			topMoveTime = car.moveTime;
+			maxMoveTime = car.moveTime;
 			winner[0].size = 1;
 			winner[1].car = car;
 		}
-		else if (topMoveTime == car.moveTime)
+		else if (maxMoveTime == car.moveTime)
 		{
 			winner[0].size++;
 			winner[winner[0].size].car = car;
