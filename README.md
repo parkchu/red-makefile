@@ -1,15 +1,16 @@
 ### Joohan’s makefile rules
 
 #파일 구조
-```project_name
-|----Makefile
-|
-|----src
-   |----main
-   |  |----*.c
-   |----test
-      |----*Test.c
-      |----unity
+```
+|project_name
+   |----Makefile
+   |
+   |----src
+      |----main
+      |  |----*.c
+      |----test
+         |----*Test.c
+         |----unity
 ```
 
 1. 파일 구조는 꼭지켜야 한다.
