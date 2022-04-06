@@ -2,19 +2,19 @@
 
 ## 파일 구조
 ```
-|----project_name
-   |----Makefile
-   |
-   |----src
-      |----main
-      |  |----*.c
-      |----test
-         |----*Test.c
-         |----unity
+project_name
+      ├--Makefile
+      └-src
+         ├-main
+         │  └--*.c
+         └-test
+            ├--*Test.c
+            └--unity
+                └--src
 ```
 
-1. 파일 구조는 꼭지켜야 한다.
-2. main.c 파일에 main 함수가 있어야 한다.
+1. 파일 구조는 꼭지켜야 한다. (폴더명도 똑같아야 한다.)
+2. 테스트 코드를 구현하지 않을거면 main 폴더까지만 만든다.
 3. 실행 파일은 main.out 으로 만들어진다. (실행은 ./main.out 으로 한다.)
 4. 처음 실행할땐 make build (테스트 코드를 작성하지 않았으면 make buildM) 를 실행한다.
 5. build를 했다면 다음부턴 make 또는 make all (컴파일만 하고 싶다면 make compile, 테스트 코드를 작성하지 않았으면 make compileM) 을 실행한다.
