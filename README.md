@@ -2,7 +2,7 @@
 
 #파일 구조
 ```
-|project_name
+|----project_name
    |----Makefile
    |
    |----src
