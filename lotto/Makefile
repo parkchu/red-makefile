@@ -16,16 +16,16 @@ UNITY = build/$(UNITY_PATH)/unity.o
 	@echo compiled $^
 
 
-all : compile test
+all : compile blank run
 
 
-compile : start copy $(TARGET) blank $(TEST_TARGET) blank delete
+compile : start copy $(TARGET) blank $(TEST_TARGET) blank delete blank test
 
 
-compileM : start copy $(TARGET) blank delete
+compileM : start copy $(TARGET) blank delete blank run
 
 
-compileT : start copy $(TEST_TARGET) blank delete test
+compileT : start copy $(TEST_TARGET) blank delete blank test
 
 
 start :
@@ -47,8 +47,12 @@ delete :
 	@echo deleted trash files .
 
 
+run :
+	@echo run $(TARGET)
+	@-./$(TARGET)
+
+
 test :
-	@echo
 	@echo test start ...
 	@echo
 	@./test.out

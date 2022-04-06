@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "test.h"
 
-void main()
+int main(void)
 {
-	printf("%d", sum(0, 10));
-	printf("\n I am pikachu");
+	printf("%d \n", sum(0, 10));
+	printf("I am pikachu \n");
 }
