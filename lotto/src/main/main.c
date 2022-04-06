@@ -3,6 +3,6 @@
 
 void main()
 {
-	printf("%d", sum(10, 20));
-	printf("\n I am pobi");
+	printf("%d", sum(0, 10));
+	printf("\n I am pikachu");
 }

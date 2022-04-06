@@ -4,10 +4,8 @@ TARGET = main.out
 TEST_TARGET = test.out
 SRC = $(wildcard src/main/*.c)
 OBJECTS = $(SRC:.c=.o)
-BUILD_OBJS = $(wildcard build/src/main/*.o)
 TEST_SRC = $(wildcard src/test/*.c)
 TEST_OBJECTS = $(TEST_SRC:.c=.o)
-TEST_BUILD_OBJS = $(wildcard build/src/test/*.o)
 TESTS = $(TEST_OBJECTS:src/test/%Test.o=build/src/main/%.o)
 UNITY_PATH = src/test/unity/src
 UNITY = build/$(UNITY_PATH)/unity.o
@@ -19,13 +17,15 @@ UNITY = build/$(UNITY_PATH)/unity.o
 
 
 all : compile test
-	@rm -f src/*/*.o
-	@echo
-	@echo deleted trash files .
 
 
-compile : start copy $(TARGET)
-	@echo compile complete of main !
+compile : start copy $(TARGET) blank $(TEST_TARGET) blank delete
+
+
+compileM : start copy $(TARGET) blank delete
+
+
+compileT : start copy $(TEST_TARGET) blank delete test
 
 
 start :
@@ -37,13 +37,17 @@ copy :
 	@rsync -azh build/src . --exclude=build/src/test/unity
 
 
-$(TARGET) : $(OBJECTS)
-	@$(CC) -o $@ $(BUILD_OBJS)
-	@echo maked $@
+blank :
+	@echo
 
 
-test : $(TEST_TARGET)
-	@echo compile complete of test !
+delete :
+	@echo compile complete !
+	@rm -f src/*/*.o
+	@echo deleted trash files .
+
+
+test :
 	@echo
 	@echo test start ...
 	@echo
@@ -51,8 +55,13 @@ test : $(TEST_TARGET)
 	@echo test complete !
 
 
+$(TARGET) : $(OBJECTS)
+	@$(CC) -o $@ $(wildcard build/src/main/*.o)
+	@echo maked $@
+
+
 $(TEST_TARGET) : $(TEST_OBJECTS)
-	@$(CC) -o $@ $(TEST_BUILD_OBJS) $(TESTS) $(UNITY)
+	@$(CC) -o $@ $(wildcard build/src/test/*.o) $(TESTS) $(UNITY)
 	@echo maked $@
 
 
@@ -70,18 +79,15 @@ build :
 
 buildM :
 	@echo build start ...
-	@mkdir -p build/src/{main,test} build/$(UNITY_PATH)
+	@mkdir -p build/src/main
 	@echo maked build file .
 	@echo
-	@make compile	
-	@rm -f src/*/*.o
-	@echo
-	@echo deleted trash files .
+	@make compileM
 	@echo
 	@echo build complete !
 
 
 clean :
-	@rm -rf build/ *.out
-	@echo deleted build and run files .
+	@rm -rf build/ *.out src/*/*.o
+	@echo deleted object and run files .
 
