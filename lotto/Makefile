@@ -34,7 +34,7 @@ start :
 
 copy :
 	@echo copy object files ...
-	@rsync -azh build/src . --exclude=build/src/test/unity
+	@rsync -azvh --exclude 'test/unity' build/src .
 
 
 blank :
