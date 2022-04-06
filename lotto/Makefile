@@ -9,7 +9,6 @@ TEST_OBJECTS = $(TEST_SRC:src/test/%.c=build/src/test/%.o)
 TESTS = $(TEST_OBJECTS:build/src/test/%Test.o=build/src/main/%.o)
 UNITY_PATH = src/test/unity/src
 UNITY = build/$(UNITY_PATH)/unity.o
-BLANK = $(shell echo)
 
 
 build/src/*/%.o : src/*/%.c
