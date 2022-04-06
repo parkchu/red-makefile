@@ -8,7 +8,7 @@ void tearDown(void) {
 }
 
 void test_sum(void) {
-	TEST_ASSERT_EQUAL(1, sum(3, 7));
+	TEST_ASSERT_EQUAL(10, sum(3, 7));
 }
 
 int main (void) {

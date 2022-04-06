@@ -26,9 +26,6 @@ compile : start $(TARGET) $(TEST_TARGET) end blank test
 compileM : start $(TARGET) end blank run
 
 
-compileT : start $(TEST_TARGET) end blank test
-
-
 start :
 	@echo compile start ...
 	@echo -----------------------------------------
