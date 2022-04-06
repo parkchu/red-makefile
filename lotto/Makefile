@@ -3,69 +3,67 @@ CFLAGS = -W -Wall
 TARGET = main.out
 TEST_TARGET = test.out
 SRC = $(wildcard src/main/*.c)
-OBJECTS = $(SRC:.c=.o)
+OBJECTS = $(SRC:src/main/%.c=build/src/main/%.o)
 TEST_SRC = $(wildcard src/test/*.c)
-TEST_OBJECTS = $(TEST_SRC:.c=.o)
-TESTS = $(TEST_OBJECTS:src/test/%Test.o=build/src/main/%.o)
+TEST_OBJECTS = $(TEST_SRC:src/test/%.c=build/src/test/%.o)
+TESTS = $(TEST_OBJECTS:build/src/test/%Test.o=build/src/main/%.o)
 UNITY_PATH = src/test/unity/src
 UNITY = build/$(UNITY_PATH)/unity.o
+BLANK = $(shell echo)
 
 
-%.o : %.c
-	@$(CC) $(CFLAGS) -c -o build/$@ $^
+build/src/*/%.o : src/*/%.c
+	@$(CC) $(CFLAGS) -c -o $@ $^
 	@echo compiled $^
 
 
-all : compile blank run
+all : compile run
 
 
-compile : start copy $(TARGET) blank $(TEST_TARGET) blank delete blank test
+compile : start $(TARGET) $(TEST_TARGET) end blank test
 
 
-compileM : start copy $(TARGET) blank delete blank run
+compileM : start $(TARGET) end blank run
 
 
-compileT : start copy $(TEST_TARGET) blank delete blank test
+compileT : start $(TEST_TARGET) end blank test
 
 
 start :
 	@echo compile start ...
-
-
-copy :
-	@echo copy object files ...
-	@rsync -azvh --exclude 'test/unity' build/src .
+	@echo -----------------------------------------
 
 
 blank :
 	@echo
 
 
-delete :
+end :
+	@echo
+	@echo -----------------------------------------
 	@echo compile complete !
-	@rm -f src/*/*.o
-	@echo deleted trash files .
 
 
 run :
 	@echo run $(TARGET)
+	@echo -----------------------------------------
 	@-./$(TARGET)
 
 
 test :
 	@echo test start ...
-	@echo
+	@echo -----------------------
 	@./test.out
 	@echo test complete !
 
 
 $(TARGET) : $(OBJECTS)
-	@$(CC) -o $@ $(wildcard build/src/main/*.o)
+	@$(CC) -o $@ $^
 	@echo maked $@
 
 
 $(TEST_TARGET) : $(TEST_OBJECTS)
-	@$(CC) -o $@ $(wildcard build/src/test/*.o) $(TESTS) $(UNITY)
+	@$(CC) -o $@ $^ $(TESTS) $(UNITY)
 	@echo maked $@
 
 
