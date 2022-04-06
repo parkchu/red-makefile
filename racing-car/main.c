@@ -35,7 +35,7 @@ void makeCars(Element *cars, char *names)
 		Car car;
 		
 		size = ++cars[0].size;
-		realloc(cars, sizeof(Element) * (size + 1));
+		cars = realloc(cars, sizeof(Element) * (size + 1));
 		strcpy(car.name, name);
 		car.number = size;
 		car.moveTime = 0;
@@ -57,7 +57,7 @@ void showStartingSignal()
         printf("출발!!!!\n\n");
 }
 
-void go(Car *car, int randomValue)
+void move(Car *car, int randomValue)
 {
         if (randomValue >= 4)
         {
@@ -81,7 +81,7 @@ void race(Car *car)
 	int randomValue;
 
 	randomValue = rand() % 10 + 1;
-	go(car, randomValue);
+	move(car, randomValue);
 }
 
 void startRacing(int times, Element *cars)
@@ -154,7 +154,7 @@ void showWinner(Element *cars)
 	free(winner);
 }
 
-void main()
+int main(void)
 {
 	char names[200];
 	int times;
