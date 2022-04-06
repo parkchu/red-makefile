@@ -3,7 +3,7 @@
 ## 파일 구조
 ```
 project_name
-      ├--Makefile
+      ├-Makefile
       └-src
          ├-main
          │  └--*.c
