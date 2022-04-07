@@ -2,11 +2,13 @@ CC = gcc
 CFLAGS = -W -Wall
 TARGET = main.out
 TEST_TARGET = test.out
-SRC = $(wildcard src/main/*.c)
+SRC = $(wildcard src/*/*.c)
 OBJECTS = $(patsubst %.c,%.o,$(subst src,build/src,$(SRC)))
-TEST_SRC = $(wildcard src/test/*.c)
-TEST_OBJECTS = $(patsubst %.c,%.o,$(subst src,build/src,$(TEST_SRC)))
+MAIN_OBJECTS = $(filter build/src/main/%.o, $(OBJECTS))
+TEST_OBJECTS = $(filter build/src/test/%.o, $(OBJECTS))
 TESTS = $(patsubst %Test.o,%.o,$(subst src/test,src/main,$(TEST_OBJECTS)))
+STUDY_SRC = $(notdir $(filter src/study/%.c, $(SRC)))
+STUDY_OUT = $(STUDY_SRC:.c=.c.out)
 UNITY_PATH = src/test/unity/src
 UNITY = build/$(UNITY_PATH)/unity.o
 
@@ -23,6 +25,28 @@ compile : start $(TARGET) $(TEST_TARGET) end test
 
 
 main : start $(TARGET) end run
+
+
+study :
+	@for src in $(STUDY_SRC) ; do \
+		$(CC) -o $$src.out src/study/$$src ; \
+		echo maked $$src.out ; \
+	done
+	@echo
+	@make studyR
+
+
+studyR :
+	@for out in $(STUDY_OUT) ; do \
+		echo run $$out ; \
+		echo ----------------------------------------- ; \
+		./$$out ; \
+		echo ; \
+		echo ; \
+		echo ----------------------------------------- ; \
+		echo complete $$out ; \
+		echo ; \
+	done
 
 
 start :
@@ -54,7 +78,7 @@ test :
 	@echo test complete !
 
 
-$(TARGET) : $(OBJECTS)
+$(TARGET) : $(MAIN_OBJECTS)
 	@$(CC) -o $@ $^
 	@echo maked $@
 
@@ -66,8 +90,9 @@ $(TEST_TARGET) : $(TEST_OBJECTS)
 
 build :
 	@echo build start ...
+	@mkdir -p src/{main,study,test}
 	@mkdir -p build/src/{main,test} build/$(UNITY_PATH)
-	@echo maked build file .
+	@echo maked build directory .
 	@$(CC) -c -o $(UNITY) $(UNITY_PATH)/unity.c
 	@echo maked unity object file .
 	@echo
@@ -78,8 +103,10 @@ build :
 
 buildM :
 	@echo build start ...
+	@mkdir -p src/{main,study}
+	@echo maked src direcotry .
 	@mkdir -p build/src/main
-	@echo maked build file .
+	@echo maked build directory .
 	@echo
 	@make main
 	@echo
