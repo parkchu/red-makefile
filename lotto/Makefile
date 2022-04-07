@@ -3,10 +3,10 @@ CFLAGS = -W -Wall
 TARGET = main.out
 TEST_TARGET = test.out
 SRC = $(wildcard src/main/*.c)
-OBJECTS = $(SRC:src/main/%.c=build/src/main/%.o)
+OBJECTS = $(patsubst %.c,%.o,$(subst src,build/src,$(SRC)))
 TEST_SRC = $(wildcard src/test/*.c)
-TEST_OBJECTS = $(TEST_SRC:src/test/%.c=build/src/test/%.o)
-TESTS = $(TEST_OBJECTS:build/src/test/%Test.o=build/src/main/%.o)
+TEST_OBJECTS = $(patsubst %.c,%.o,$(subst src,build/src,$(TEST_SRC)))
+TESTS = $(patsubst %Test.o,%.o,$(subst src/test,src/main,$(TEST_OBJECTS)))
 UNITY_PATH = src/test/unity/src
 UNITY = build/$(UNITY_PATH)/unity.o
 
@@ -16,13 +16,13 @@ build/src/*/%.o : src/*/%.c
 	@echo compiled $^
 
 
-all : compile run
+all : compile blank run
 
 
-compile : start $(TARGET) $(TEST_TARGET) end blank test
+compile : start $(TARGET) $(TEST_TARGET) end test
 
 
-compileM : start $(TARGET) end blank run
+main : start $(TARGET) end run
 
 
 start :
@@ -38,6 +38,7 @@ end :
 	@echo
 	@echo -----------------------------------------
 	@echo compile complete !
+	@echo
 
 
 run :
@@ -80,7 +81,7 @@ buildM :
 	@mkdir -p build/src/main
 	@echo maked build file .
 	@echo
-	@make compileM
+	@make main
 	@echo
 	@echo build complete !
 
