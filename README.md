@@ -1,4 +1,4 @@
-# Red’s makefile rules
+# Red’s makefile
 
 ## 파일 구조
 ```
@@ -13,6 +13,13 @@ project_name
                 └--src
 ```
 
+## 다운로드
+```
+curl -L -O https://github.com/parkchu/study-C/raw/lotto/lotto/Makefile
+```
+위 명령어를 통해 Makefile 을 다운받아 사용한다.
+
+## 규칙
 1. 파일 구조는 꼭지켜야 한다. (폴더명도 똑같아야 한다.)
 2. 테스트 코드를 구현하지 않을거면 main 폴더까지만 만든다.
 3. 실행 파일은 main.out 으로 만들어진다. (실행은 ./main.out 또는 make run 으로 한다.)
