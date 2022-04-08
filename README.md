@@ -25,13 +25,13 @@ curl -L -O https://github.com/parkchu/study-C/raw/lotto/lotto/Makefile
 
 ### use test ver
 1. Makefile 을 프로젝트 폴더 하위에 다운받는다.
-2. make build 를 통해 하위 폴더들을 만든다.
+2. make init 을 통해 하위 폴더들을 만든다.
 3. src/main, src/test 에 코드를 구현한다.
 4. make 또는 make all 을 입력해 코드를 컴파일하고 실행한다.
 
 ### use only main ver
 1. Makefile 을 프로젝트 폴더 하위에 다운받는다.
-2. make buildM 을 통해 하위 폴더들을 만든다.
+2. make initM 을 통해 하위 폴더들을 만든다.
 3. src/main에 코드를 구현한다.
 4. make main 을 입력해 코드를 컴파일하고 실행한다.
 
@@ -45,7 +45,7 @@ curl -L -O https://github.com/parkchu/study-C/raw/lotto/lotto/Makefile
 1. 파일 구조는 꼭지켜야 한다. (폴더명도 똑같아야 한다.)
 2. main 함수는 main, test 폴더에 하나씩만 존재해야 한다.
 3. 실행 파일은 main.out 으로 만들어진다. (실행은 ./main.out 또는 make run 으로 한다.)
-4. 처음 실행할땐 make build (테스트 코드를 구현하지 않을거면 make buildM) 를 실행한다.
+4. 처음 실행할땐 make init (테스트 코드를 구현하지 않을거면 make initM) 을 실행한다.
 5. build 할때 작성한 코드가 없다면 컴파일 에러가 발생하지만 'build complete !' 라는 문구가 뜨면 빌드는 성공한것이다.
 6. build 를 했다면 다음부턴 make 또는 make all (컴파일만 하고 싶다면 make compile, 테스트 코드를 구현하지 않을거면 make main) 을 실행한다.
 7. 테스트 코드의 파일명은 내가 테스트하려는 파일 이름에 Test 를 추가하여 작성한다. ex) pikachu.c 파일을 테스트 하는 테스트 코드 파일명은 pikachuTest.c 가 되어야한다.
