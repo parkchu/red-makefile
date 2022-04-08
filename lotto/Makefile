@@ -1,5 +1,6 @@
 CC = gcc
 CFLAGS = -W -Wall
+INCLUDE = -I src/
 TARGET = main.out
 TEST_TARGET = test.out
 SRC = $(wildcard src/*/*.c)
@@ -14,7 +15,7 @@ UNITY = build/$(UNITY_PATH)/unity.o
 
 
 build/src/*/%.o : src/*/%.c
-	@$(CC) $(CFLAGS) -c -o $@ $^
+	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
 	@echo compiled $^
 
 
@@ -90,9 +91,17 @@ $(TEST_TARGET) : $(TEST_OBJECTS)
 
 build :
 	@echo build start ...
-	@mkdir -p src/{main,study,test}
+	@mkdir -p src/{main,study,test} $(UNITY_PATH)
+	@echo maked src directory .
 	@mkdir -p build/src/{main,test} build/$(UNITY_PATH)
 	@echo maked build directory .
+ifeq ($(wildcard $(UNITY_PATH)/unity.c),)
+	@echo unity download start ...
+	@git clone https://github.com/ThrowTheSwitch/Unity.git
+	@mv Unity/src src/test/unity
+	@rm -rf Unity
+	@echo unity download complete !
+endif
 	@$(CC) -c -o $(UNITY) $(UNITY_PATH)/unity.c
 	@echo maked unity object file .
 	@echo
