@@ -96,7 +96,7 @@ build :
 	@$(CC) -c -o $(UNITY) $(UNITY_PATH)/unity.c
 	@echo maked unity object file .
 	@echo
-	@make all
+	-@make all
 	@echo
 	@echo build complete !
 
@@ -108,7 +108,7 @@ buildM :
 	@mkdir -p build/src/main
 	@echo maked build directory .
 	@echo
-	@make main
+	-@make main
 	@echo
 	@echo build complete !
 
