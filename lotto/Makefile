@@ -89,19 +89,35 @@ $(TEST_TARGET) : $(TEST_OBJECTS)
 	@echo maked $@
 
 
-build :
-	@echo build start ...
+init :
+	@echo init ...
+	@make clean
 	@mkdir -p src/{main,study,test} $(UNITY_PATH)
 	@echo maked src directory .
-	@mkdir -p build/src/{main,test} build/$(UNITY_PATH)
-	@echo maked build directory .
-ifeq ($(wildcard $(UNITY_PATH)/unity.c),)
 	@echo unity download start ...
 	@git clone https://github.com/ThrowTheSwitch/Unity.git
-	@mv Unity/src src/test/unity
+	@cp Unity/src/* $(UNITY_PATH)
 	@rm -rf Unity
 	@echo unity download complete !
-endif
+	@echo
+	@make build
+	@echo done .
+
+
+initM :
+	@echo init ...
+	@make clean
+	@mkdir -p src/{main,study}
+	@echo maked src direcotry .
+	@echo
+	@make buildM
+	@echo done .
+
+
+build :
+	@echo build start ...
+	@mkdir -p build/src/{main,test} build/$(UNITY_PATH)
+	@echo maked build directory .
 	@$(CC) -c -o $(UNITY) $(UNITY_PATH)/unity.c
 	@echo maked unity object file .
 	@echo
@@ -112,8 +128,6 @@ endif
 
 buildM :
 	@echo build start ...
-	@mkdir -p src/{main,study}
-	@echo maked src direcotry .
 	@mkdir -p build/src/main
 	@echo maked build directory .
 	@echo
