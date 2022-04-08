@@ -64,6 +64,8 @@ curl -L -O https://github.com/parkchu/study-C/raw/lotto/lotto/Makefile
 |main|main 폴더 내의 파일들만 컴파일하고 실행합니다.|
 |study|study 폴더 내의 파일들을 컴파일하고 실행합니다.|
 |studyR|예전에 컴파일한 *.c.out 파일들을 실행합니다.|
+|init|main, study, test 폴더를 만들며 build 를 실행합니다.|
+|initM|main, study 폴더를 만들며 buildM 을 실행합니다.|
 |build|main, test 의 build 폴더를 만들며 모든 파일을 컴파일하고 테스트하고 실행합니다.|
 |buildM|main 의 build 폴더를 만들며 main 폴더 내의 파일들만 컴파일하고 실행합니다.|
 |run|에전에 컴파일한 main.out 을 실행합니다.|
