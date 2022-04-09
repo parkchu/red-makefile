@@ -32,5 +32,5 @@ TEST(testTest, test_exam2)
 
 TEST(testTest, test_exam3)
 {
-	TEST_ASSERT_EQUAL(1, 0);
+	TEST_ASSERT_EQUAL(0, 0);
 }

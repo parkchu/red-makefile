@@ -26,14 +26,14 @@ build/src/*/%.o : src/*/%.c
 	@echo compiled $^
 
 
-all : compile
+all : compile run
 
 
 compile : start $(TARGET)
 ifeq ($(TEST_OBJECTS),)
-	@make end run
+	@make end
 else
-	@make $(TEST_TARGET) end test run
+	@make $(TEST_TARGET) end test blank
 endif
 
 
