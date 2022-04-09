@@ -22,7 +22,3 @@ TEST(testTest, test_exam)
 	TEST_ASSERT_EQUAL(0, 0);
 }
 
-void test_sum(void) {
-	TEST_ASSERT_EQUAL(10, sum(3, 7));
-}
-
