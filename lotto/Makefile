@@ -26,13 +26,15 @@ build/src/*/%.o : src/*/%.c
 	@echo compiled $^
 
 
-all : compile blank run
+all : compile
 
 
-compile : start $(TARGET) $(TEST_TARGET) end test
-
-
-main : start $(TARGET) end run
+compile : start $(TARGET)
+ifeq ($(TEST_OBJECTS),)
+	@make end run
+else
+	@make $(TEST_TARGET) end test run
+endif
 
 
 study :
@@ -125,24 +127,19 @@ initM :
 
 build :
 	@echo build start ...
-	@mkdir -p build/src/{main,test} build/src/test/test_runners build/$(UNITY_SRC_PATH) build/$(UNITY_EXTRAS_PATH)
+	@mkdir -p build/src/main
+ifneq ($(TEST_OBJECTS),)
+	@mkdir -p build/src/test/test_runners build/$(UNITY_SRC_PATH) build/$(UNITY_EXTRAS_PATH)
 	@echo maked build directory .
 	@$(CC) -c -o $(UNITY) $(UNITY_SRC_PATH)/unity.c
 	@$(CC) -I$(UNITY_SRC_PATH) -c -o build/$(UNITY_EXTRAS_PATH)/unity_fixture.o $(UNITY_EXTRAS_PATH)/unity_fixture.c
 	@$(CC) -I$(UNITY_SRC_PATH) -c -o build/$(UNITY_EXTRAS_PATH)/unity_memory.o $(UNITY_EXTRAS_PATH)/unity_memory.c
 	@echo maked unity object file .
+else
+	@echo maked build directory .
+endif
 	@echo
 	-@make all
-	@echo
-	@echo build complete !
-
-
-buildM :
-	@echo build start ...
-	@mkdir -p build/src/main
-	@echo maked build directory .
-	@echo
-	-@make main
 	@echo
 	@echo build complete !
 
