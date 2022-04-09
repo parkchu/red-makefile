@@ -4,5 +4,5 @@
 int main(void)
 {
 	printf("%d \n", sum(10, 10));
-	printf("I am pikachu \n");
+	printf("I am red \n");
 }
