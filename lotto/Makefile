@@ -121,14 +121,14 @@ initM :
 	@mkdir -p src/{main,study}
 	@echo maked src direcotry .
 	@echo
-	@make buildM
+	@make build
 	@echo done .
 
 
 build :
 	@echo build start ...
 	@mkdir -p build/src/main
-ifneq ($(TEST_OBJECTS),)
+ifneq ($(wildcard $(UNITY_SRC_PATH)/unity.c),)
 	@mkdir -p build/src/test/test_runners build/$(UNITY_SRC_PATH) build/$(UNITY_EXTRAS_PATH)
 	@echo maked build directory .
 	@$(CC) -c -o $(UNITY) $(UNITY_SRC_PATH)/unity.c
