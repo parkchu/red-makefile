@@ -1,29 +1,28 @@
-#include "unity/src/unity.h"
-#include "main/test.h"
+#include "unity.h"
+#include "unity_fixture.h"
+#include "test.h"
 
-void setUp(void) {
+TEST_GROUP(testTest);
+
+TEST_SETUP(testTest)
+{
 }
 
-void tearDown(void) {
+TEST_TEAR_DOWN(testTest)
+{
 }
 
-void test_sum(void) {
-	TEST_ASSERT_EQUAL(0, sum(3, 7));
+TEST(testTest, test_sum)
+{
+	TEST_ASSERT_EQUAL(1, sum(3, 7));
 }
 
-void test_exam(void) {
+TEST(testTest, test_exam)
+{
 	TEST_ASSERT_EQUAL(0, 0);
 }
 
-int main (void) {
-	int failTests;
-	UNITY_BEGIN();
-	RUN_TEST(test_sum);
-	RUN_TEST(test_exam);
-	failTests = UNITY_END();
-	if (failTests > 0)
-	{
-		printf("TEST FAILED ... \n");
-	}
-	return failTests;
+void test_sum(void) {
+	TEST_ASSERT_EQUAL(10, sum(3, 7));
 }
+
