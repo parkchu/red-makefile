@@ -3,16 +3,19 @@
 ## 파일 구조
 ```
 project_name
-      ├-Makefile
-      └-src
-         ├-main
-         │  └--*.c
-         ├-study
-         │  └--*.c
-         └-test
-            ├--*Test.c
-            └--unity
-                └--src
+      ├--Makefile
+      └--src
+          ├--main
+          │   └--*.c
+          ├--study
+          │   └--*.c
+          └--test
+              ├--*Test.c
+              ├--test_runners
+              │    ├--allTests.c
+              │    └--*TestRunner.c
+              └--unity
+                   └--src
 ```
 
 ## 다운로드
@@ -48,7 +51,7 @@ curl -L -O https://github.com/parkchu/study-C/raw/lotto/lotto/Makefile
 4. 처음 실행할땐 make init (테스트 코드를 구현하지 않을거면 make initM) 을 실행한다.
 5. build 할때 작성한 코드가 없다면 컴파일 에러가 발생하지만 'build complete !' 라는 문구가 뜨면 빌드는 성공한것이다.
 6. build 를 했다면 다음부턴 make 또는 make all (컴파일만 하고 싶다면 make compile, 테스트 코드를 구현하지 않을거면 make main) 을 실행한다.
-7. 테스트 코드의 파일명은 내가 테스트하려는 파일 이름에 Test 를 추가하여 작성한다. ex) pikachu.c 파일을 테스트 하는 테스트 코드 파일명은 pikachuTest.c 가 되어야한다.
+7. 테스트 코드의 파일명은 내가 테스트하려는 파일 이름에 Test 를 추가하여 작성한다. ex) pikachu.h 파일을 테스트 하는 테스트 코드 파일명은 pikachuTest.c 가 되어야한다.
 8. 테스트 코드를 작성할땐 unity 로 작성해야한다.
 9. unity 폴더는 test 폴더 하위에 있어야한다.
 10. unity 파일들은 공식 사이트에서 다운 받은 src 폴더를 unity 폴더 하위로 넣어서 사용한다.
@@ -71,3 +74,56 @@ curl -L -O https://github.com/parkchu/study-C/raw/lotto/lotto/Makefile
 |run|에전에 컴파일한 main.out 을 실행합니다.|
 |test|에전에 컴파일한 test.out 을 실행합니다.|
 |clean|build폴더와 실행 파일을 삭제합니다.|
+
+## 테스트 코드 예시
+* pikachu.h 파일을 테스트 한다고 가정하겠습니다.
+* 해당 테스트 코드의 테스트 그룹명은 모두 동일해야합니다.
+* 테스트명은 각 테스트 마다 어떤 테스트를 하는건지 자유롭게 작성해주시면 됩니다. (단, TestRunner 에서 RUN_TEST_CASE 작성시 동일한 테스트명을 입력해야합니다.)
+
+pikachuTest.c
+```
+#include "unity.h"
+#include "unity_fixture.h"
+#include "pikachu.h"
+
+TEST_GROUP(pikachuTest);
+
+TEST_SETUP(pikachuTest)
+{
+}
+
+TEST_TEAR_DOWN(pikachuTest)
+{
+}
+
+TEST(pikachuTest, test_attach)
+{
+      // 테스트 코드 작성
+}
+```
+
+test_runners/pikachuTestRunner.c
+```
+#include "unity.h"
+#include "unity_fixture.h"
+
+TEST_GROUP_RUNNER(pikcahuTest)
+{
+      RUN_TEST_CASE(pikcahuTest, test_attach);
+}
+```
+
+test_runners/allTests.c
+```
+#include "unity_fixture.h"
+
+static void RunAllTests(void)
+{
+      RUN_TEST_GROUP(pikachuTest);
+}
+
+int main(int argc, const char *argv[])
+{
+      return UnityMain(argc, argv, RunAllTests);
+}
+```
