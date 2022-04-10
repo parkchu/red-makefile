@@ -60,19 +60,21 @@ curl -L -O https://github.com/parkchu/red-makefile/raw/lotto/Makefile
 
 ## 사용할 수 있는 명령어
 * 명령어는 기본적으로 앞에 make 를 붙여 사용합니다.
+* 단축키는 설정후 사용가능합니다.
+* 단축키를 사용할땐 make 를 붙이지 않습니다.
 
-|명령어|기능 test ver|기능 only main ver|
-|:------:|-----------------------------------|-----------------------------------|
-|init|main, study, test 폴더를 만들며 build 를 실행합니다.|
-|initM||main, study 폴더를 만들며 buildM 을 실행합니다.|
-|all|모든 파일을 컴파일하고 테스트가 성공하면 실행합니다.|모든 파일을 컴파일하고 실행합니다.|
-|compile|모든 파일을 컴파일하고 테스트합니다.|모든 파일을 컴파일만 합니다.|
-|study|study 폴더 내의 파일들을 컴파일하고 실행합니다.|test ver 과 동일합니다.|
-|studyR|예전에 컴파일한 *.c.out 파일들을 실행합니다.|test ver 과 동일합니다.|
-|build|main, test 의 build 폴더를 만들며 make all 을 실행합니다.|main 의 build 폴더를 만들며 make all 을 실행합니다|
-|run|에전에 컴파일한 main.out 을 실행합니다.|test ver 과 동일합니다.|
-|test|에전에 컴파일한 test.out 을 실행합니다.|에러가 발생합니다.|
-|clean|build폴더와 실행 파일을 삭제합니다.|test ver 과 동일합니다|
+|명령어|단축키|기능 test ver|기능 only main ver|
+|:------:|:---:|-----------------------------------|-----------------------------------|
+|init|mi|main, study, test 폴더를 만들며 build 를 실행합니다.|
+|initM|mim||main, study 폴더를 만들며 buildM 을 실행합니다.|
+|all|ma|모든 파일을 컴파일하고 테스트가 성공하면 실행합니다.|모든 파일을 컴파일하고 실행합니다.|
+|compile|mc|모든 파일을 컴파일하고 테스트합니다.|모든 파일을 컴파일만 합니다.|
+|study|ms|study 폴더 내의 파일들을 컴파일하고 실행합니다.|test ver 과 동일합니다.|
+|studyR|msr|예전에 컴파일한 *.c.out 파일들을 실행합니다.|test ver 과 동일합니다.|
+|build|mb|main, test 의 build 폴더를 만들며 make all 을 실행합니다.|main 의 build 폴더를 만들며 make all 을 실행합니다|
+|run|mr|에전에 컴파일한 main.out 을 실행합니다.|test ver 과 동일합니다.|
+|test|mt|에전에 컴파일한 test.out 을 실행합니다.|에러가 발생합니다.|
+|clean|mcl|build폴더와 실행 파일을 삭제합니다.|test ver 과 동일합니다|
 
 ## oh my zsh 사용시 단축키 설정
 ~/.zshrc 파일에 복사
@@ -90,6 +92,7 @@ alias ms="m study"
 alias msr="m studyR"
 alias mcl="m clean"
 ```
+source ~/.zshrc 실행
 
 ## 테스트 코드 예시
 * pikachu.h 파일을 테스트 한다고 가정하겠습니다.
