@@ -1,5 +1,6 @@
 CC = gcc
 CFLAGS = -W -Wall
+MK = make --no-print-directory
 INCLUDE = $(subst src,-Isrc,$(HEADER_PATH)) -I$(UNITY_SRC_PATH) -I$(UNITY_EXTRAS_PATH)
 TARGET = main.out
 TEST_TARGET = test.out
@@ -21,7 +22,17 @@ UNITY_EXTRAS = build/$(UNITY_EXTRAS_PATH)/*.o
 UNITY_OBJECTS = $(UNITY) $(UNITY_EXTRAS)
 
 
-build/src/*/%.o : src/*/%.c
+build/src/main/%.o : src/main/%.c
+	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
+	@echo compiled $^
+
+
+build/src/test/%.o : src/test/%.c
+	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
+	@echo compiled $^
+
+
+build/src/study/%.o : src/study/%.c
 	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
 	@echo compiled $^
 
@@ -30,11 +41,11 @@ all : compile blank run
 
 
 compile : start
-	@make $(TARGET)
+	@$(MK) $(TARGET)
 ifeq ($(TEST_OBJECTS),)
-	@make end
+	@$(MK) end
 else
-	@make $(TEST_TARGET) end blank test
+	@$(MK) $(TEST_TARGET) end blank test
 endif
 
 
@@ -44,7 +55,7 @@ study :
 		echo maked $$src.out ; \
 	done
 	@echo
-	@make studyR
+	@$(MK) studyR
 
 
 studyR :
@@ -100,8 +111,8 @@ $(TEST_TARGET) : $(TEST_OBJECTS)
 
 init :
 	@echo init ...
-	@make clean
-	@mkdir -p src/{main,study,test} src/test/test_runners $(UNITY_SRC_PATH) $(UNITY_EXTRAS_PATH)
+	@$(MK) clean
+	@mkdir -p src/main src/test src/study src/test/test_runners $(UNITY_SRC_PATH) $(UNITY_EXTRAS_PATH)
 	@echo maked src directory .
 	@echo unity download start ...
 	-@git clone https://github.com/ThrowTheSwitch/Unity.git
@@ -111,17 +122,17 @@ init :
 	@rm -rf Unity
 	@echo unity download complete !
 	@echo
-	@make build
+	@$(MK) build
 	@echo done .
 
 
 initM :
 	@echo init ...
-	@make clean
-	@mkdir -p src/{main,study}
+	@$(MK) clean
+	@mkdir -p src/main src/study
 	@echo maked src direcotry .
 	@echo
-	@make build
+	@$(MK) build
 	@echo done .
 
 
@@ -139,7 +150,7 @@ else
 	@echo maked build directory .
 endif
 	@echo
-	-@make all
+	-@$(MK) all
 	@echo
 	@echo build complete !
 
