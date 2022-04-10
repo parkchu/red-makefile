@@ -74,6 +74,23 @@ curl -L -O https://github.com/parkchu/red-makefile/raw/lotto/Makefile
 |test|에전에 컴파일한 test.out 을 실행합니다.|에러가 발생합니다.|
 |clean|build폴더와 실행 파일을 삭제합니다.|test ver 과 동일합니다|
 
+## oh my zsh 사용시 단축키 설정
+~/.zshrc 파일에 복사
+```
+# Makefile aliases
+alias m="make"
+alias ma="m all"
+alias mi="m init"
+alias mim="m initM"
+alias mb="m build"
+alias mc="m compile"
+alias mr="m run"
+alias mt="m test"
+alias ms="m study"
+alias msr="m studyR"
+alias mcl="m clean"
+```
+
 ## 테스트 코드 예시
 * pikachu.h 파일을 테스트 한다고 가정하겠습니다.
 * 해당 테스트 코드의 테스트 그룹명은 모두 동일해야합니다.
