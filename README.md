@@ -20,7 +20,7 @@ project_name
 
 ## 다운로드
 ```
-curl -L -O https://github.com/parkchu/red-makefile/raw/lotto/Makefile
+curl -L -O https://github.com/parkchu/red-makefile/raw/master/Makefile
 ```
 위 명령어를 통해 Makefile 을 다운받아 사용한다.
 
