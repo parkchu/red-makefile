@@ -1,12 +1,10 @@
 CC = gcc
 CFLAGS = -W -Wall
 MK = make --no-print-directory
-INCLUDE = $(subst src,-Isrc,$(HEADER_PATH)) -I$(UNITY_SRC_PATH) -I$(UNITY_EXTRAS_PATH)
+INCLUDE = -Iincludes -I$(UNITY_SRC_PATH) -I$(UNITY_EXTRAS_PATH)
 TARGET = main.out
 TEST_TARGET = test.out
 SRC = $(wildcard src/*/*.c) $(wildcard src/*/*/*.c)
-HEADER = $(wildcard src/*/*.h)
-HEADER_PATH = $(sort $(dir $(HEADER)))
 OBJECTS = $(patsubst %.c,%.o,$(subst src,build/src,$(SRC)))
 MAIN_OBJECTS = $(filter build/src/main/%.o, $(OBJECTS))
 TEST_OBJECTS = $(filter build/src/test/%.o, $(OBJECTS))
@@ -22,19 +20,14 @@ UNITY_EXTRAS = build/$(UNITY_EXTRAS_PATH)/*.o
 UNITY_OBJECTS = $(UNITY) $(UNITY_EXTRAS)
 
 
-build/src/main/%.o : src/main/%.c
+build/src/*/%.o : src/*/%.c
 	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
 	@echo compiled $^
 
 
-build/src/test/%.o : src/test/%.c
-	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
-	@echo compiled $^
-
-
-build/src/study/%.o : src/study/%.c
-	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
-	@echo compiled $^
+%.c.out : src/study/%.c
+	@$(CC) $(CFLAGS) $(INCLUDE) -o $@ $^
+	@echo maked $@
 
 
 all : compile blank run
@@ -49,25 +42,16 @@ else
 endif
 
 
-study :
-	@for src in $(STUDY_SRC) ; do \
-		$(CC) -o $$src.out src/study/$$src ; \
-		echo maked $$src.out ; \
-	done
-	@echo
+study : $(STUDY_OUT)
 	@$(MK) studyR
 
 
 studyR :
 	@for out in $(STUDY_OUT) ; do \
+		echo ; \
 		echo run $$out ; \
 		echo ----------------------------------------- ; \
 		./$$out ; \
-		echo ; \
-		echo ; \
-		echo ----------------------------------------- ; \
-		echo complete $$out ; \
-		echo ; \
 	done
 
 
@@ -112,7 +96,7 @@ $(TEST_TARGET) : $(TEST_OBJECTS)
 init :
 	@echo init ...
 	@$(MK) clean
-	@mkdir -p src/main src/test src/study src/test/test_runners $(UNITY_SRC_PATH) $(UNITY_EXTRAS_PATH)
+	@mkdir -p src/main src/test src/study src/test/test_runners $(UNITY_SRC_PATH) $(UNITY_EXTRAS_PATH) includes
 	@echo maked src directory .
 	@echo unity download start ...
 	-@git clone https://github.com/ThrowTheSwitch/Unity.git
@@ -129,7 +113,7 @@ init :
 initM :
 	@echo init ...
 	@$(MK) clean
-	@mkdir -p src/main src/study
+	@mkdir -p src/main src/study includes
 	@echo maked src direcotry .
 	@echo
 	@$(MK) build
