@@ -4,6 +4,9 @@
 ```
 project_name
       ├--Makefile
+      │
+      ├--includes
+      │     └--*.h
       └--src
           ├--main
           │   └--*.c
