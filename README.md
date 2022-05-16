@@ -14,9 +14,8 @@ project_name
           │   └--*.c
           └--test
               ├--*Test.c
-              ├--test_runners
-              │    ├--allTests.c
-              │    └--*TestRunner.c
+              ├--allTests.c
+              │
               └--unity
                    └--src
 ```
@@ -104,7 +103,6 @@ source ~/.zshrc 실행
 
 pikachuTest.c
 ```
-#include "unity.h"
 #include "unity_fixture.h"
 #include "pikachu.h"
 
@@ -118,24 +116,18 @@ TEST_TEAR_DOWN(pikachuTest)
 {
 }
 
-TEST(pikachuTest, test_attach)
+TEST(pikachuTest, test_attack)
 {
       // 테스트 코드 작성
 }
-```
-
-test_runners/pikachuTestRunner.c
-```
-#include "unity.h"
-#include "unity_fixture.h"
 
 TEST_GROUP_RUNNER(pikcahuTest)
 {
-      RUN_TEST_CASE(pikcahuTest, test_attach);
+      RUN_TEST_CASE(pikcahuTest, test_attack);
 }
 ```
 
-test_runners/allTests.c
+allTests.c
 ```
 #include "unity_fixture.h"
 
