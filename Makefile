@@ -8,8 +8,7 @@ SRC = $(wildcard src/*/*.c) $(wildcard src/*/*/*.c)
 OBJECTS = $(patsubst %.c,%.o,$(subst src,build/src,$(SRC)))
 MAIN_OBJECTS = $(filter build/src/main/%.o, $(OBJECTS))
 TEST_OBJECTS = $(filter build/src/test/%.o, $(OBJECTS))
-TESTS = $(patsubst %Test.o,%.o, $(subst src/test,src/main, \
-$(filter-out build/src/test/allTests.o, $(TEST_OBJECTS))))
+TESTS = $(filter-out build/src/main/main.o, $(MAIN_OBJECTS))
 STUDY_SRC = $(notdir $(filter src/study/%.c, $(SRC)))
 STUDY_OUT = $(STUDY_SRC:.c=.c.out)
 UNITY_PATH = src/test/unity
