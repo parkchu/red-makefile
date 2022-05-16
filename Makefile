@@ -9,7 +9,7 @@ OBJECTS = $(patsubst %.c,%.o,$(subst src,build/src,$(SRC)))
 MAIN_OBJECTS = $(filter build/src/main/%.o, $(OBJECTS))
 TEST_OBJECTS = $(filter build/src/test/%.o, $(OBJECTS))
 TESTS = $(patsubst %Test.o,%.o, $(subst src/test,src/main, \
-$(filter-out build/src/test/test_runners/%.o, $(TEST_OBJECTS))))
+$(filter-out build/src/test/allTests.o, $(TEST_OBJECTS))))
 STUDY_SRC = $(notdir $(filter src/study/%.c, $(SRC)))
 STUDY_OUT = $(STUDY_SRC:.c=.c.out)
 UNITY_PATH = src/test/unity
