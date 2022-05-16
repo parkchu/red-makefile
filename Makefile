@@ -33,20 +33,19 @@ build/src/*/%.o : src/*/%.c
 all : compile blank run
 
 
-compile : start
-	@-$(MK) $(TARGET)
-ifeq ($(TEST_OBJECTS),)
-	@$(MK) end
-else
-	@$(MK) $(TEST_TARGET) end blank test
+compile :
+	@echo compile start ...
+	@echo -----------------------------------------
+	@$(MK) $(TARGET)
+ifneq ($(TEST_OBJECTS),)
+	@$(MK) test
 endif
+	@echo
+	@echo -----------------------------------------
+	@echo compile complete !
 
 
 study : $(STUDY_OUT)
-	@$(MK) studyR
-
-
-studyR :
 	@for out in $(STUDY_OUT) ; do \
 		echo ; \
 		echo run $$out ; \
@@ -55,19 +54,8 @@ studyR :
 	done
 
 
-start :
-	@echo compile start ...
-	@echo -----------------------------------------
-
-
 blank :
 	@echo
-
-
-end :
-	@echo
-	@echo -----------------------------------------
-	@echo compile complete !
 
 
 run :
@@ -76,7 +64,8 @@ run :
 	@-./$(TARGET)
 
 
-test :
+test : $(TEST_TARGET)
+	@echo
 	@echo test start ...
 	@echo -----------------------
 	@./test.out
