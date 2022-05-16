@@ -34,7 +34,7 @@ all : compile blank run
 
 
 compile : start
-	@$(MK) $(TARGET)
+	@-$(MK) $(TARGET)
 ifeq ($(TEST_OBJECTS),)
 	@$(MK) end
 else
