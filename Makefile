@@ -81,8 +81,8 @@ $(TARGET) : $(MAIN_OBJECTS)
 	@echo maked $@
 
 
-$(TEST_TARGET) : $(TEST_OBJECTS)
-	@$(CC) -o $@ $^ $(TESTS) $(UNITY_OBJECTS)
+$(TEST_TARGET) : $(TEST_OBJECTS) $(TESTS)
+	@$(CC) -o $@ $^ $(UNITY_OBJECTS)
 	@echo maked $@
 
 
