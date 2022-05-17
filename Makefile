@@ -84,7 +84,7 @@ $(TEST_TARGET) : $(TEST_OBJECTS)
 init :
 	@echo init ...
 	@$(MK) clean
-	@mkdir -p src/main src/test src/study src/test/test_runners $(UNITY_SRC_PATH) $(UNITY_EXTRAS_PATH) includes
+	@mkdir -p src/main src/test src/study $(UNITY_SRC_PATH) $(UNITY_EXTRAS_PATH) includes
 	@echo maked src directory .
 	@echo unity download start ...
 	-@git clone https://github.com/ThrowTheSwitch/Unity.git
