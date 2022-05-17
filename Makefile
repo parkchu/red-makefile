@@ -19,7 +19,12 @@ UNITY_EXTRAS = build/$(UNITY_EXTRAS_PATH)/*.o
 UNITY_OBJECTS = $(UNITY) $(UNITY_EXTRAS)
 
 
-build/src/*/%.o : src/*/%.c
+build/src/main/%.o : src/main/%.c
+	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
+	@echo compiled $^
+
+
+build/src/test/%.o : src/test/%.c
 	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
 	@echo compiled $^
 
