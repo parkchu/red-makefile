@@ -117,7 +117,7 @@ build :
 	@echo build start ...
 	@mkdir -p build/src/main
 ifneq ($(wildcard $(UNITY_SRC_PATH)/unity.c),)
-	@mkdir -p build/src/test/test_runners build/$(UNITY_SRC_PATH) build/$(UNITY_EXTRAS_PATH)
+	@mkdir -p build/src/test build/$(UNITY_SRC_PATH) build/$(UNITY_EXTRAS_PATH)
 	@echo maked build directory .
 	@$(CC) -c -o $(UNITY) $(UNITY_SRC_PATH)/unity.c
 	@$(CC) -I$(UNITY_SRC_PATH) -c -o build/$(UNITY_EXTRAS_PATH)/unity_fixture.o $(UNITY_EXTRAS_PATH)/unity_fixture.c
